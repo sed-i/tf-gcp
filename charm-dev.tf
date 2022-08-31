@@ -32,7 +32,7 @@ resource "google_compute_instance" "vm_charm_dev" {
 
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-2104-hirsute-v20211119"
+      image = "ubuntu-os-cloud/ubuntu-minimal-2204-lts"
       type  = var.disk_type
       size  = "50"
     }
