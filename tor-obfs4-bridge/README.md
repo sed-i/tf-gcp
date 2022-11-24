@@ -100,6 +100,11 @@ terraform destroy -var-file="tor-obfs4-bridge.tfvars"
 - Tested on:
   - Terraform v1.1.4 on linux_amd64, google-cloud-sdk 374.0.0
 
+## TODO
+- Clamped autoscaling
+- Multiregional (e.g. noram, europe, asia)
+- Enable IPv6 in docker
+
 ## References
 - [COS Lite load test](https://github.com/canonical/cos-lite-bundle/tree/main/tests/load/gcp)
 - Multipass [data-science](https://github.com/canonical/multipass-workflows/blob/main/v1/data-science.yaml) workflow

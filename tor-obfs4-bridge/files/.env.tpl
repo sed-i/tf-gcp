@@ -12,7 +12,9 @@ EMAIL=${EMAIL}
 #NICKNAME=DockerObfs4Bridge
 
 # If needed, activate additional variables processing
-#OBFS4_ENABLE_ADDITIONAL_VARIABLES=1
 # and define desired torrc entries prefixed with OBFS4V_
-# For example:
-#OBFS4V_AddressDisableIPv6=1
+OBFS4_ENABLE_ADDITIONAL_VARIABLES=1
+
+# TODO consider adding ipv6
+# https://docs.docker.com/config/daemon/ipv6/
+OBFS4V_AddressDisableIPv6=1
