@@ -16,9 +16,9 @@ provider "google" {
 }
 
 locals {
-  tor_bridge_internal_url            = "http://${google_compute_instance.vm_data_science.name}.${var.zone}.c.${var.project}.internal"
-  file_provisioner_ssh_key = file(var.ssh_private_key_path)
-  data_science_resource_name  = "tor-obfs4-bridge-${var.ncpus}cpu-${var.gbmem}gb"
+  tor_bridge_internal_url        = "http://${google_compute_instance.vm_tor_obfs4_bridge.name}.${var.zone}.c.${var.project}.internal"
+  file_provisioner_ssh_key       = file(var.ssh_private_key_path)
+  tor_obfs4_bridge_resource_name = "tor-obfs4-bridge-${var.ncpus}cpu-${var.gbmem}gb"
 }
 
 resource "google_compute_network" "tor_bridge_net" {

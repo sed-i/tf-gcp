@@ -12,10 +12,10 @@ A `tor-obfs4-bridge-2cpu-8gb` VM will be ready to use in a few minutes.
 
 ## Setup GCP
 1. [Create a new project](https://console.cloud.google.com/cloud-resource-manager)
-   and name it e.g. `data-science`. Note the Project ID (e.g. `stunning-vertex-342218`).
+   and name it e.g. `data-tor-obfs4-gridge`. Note the Project ID (e.g. `stunning-vertex-342218`).
 2. Export a JSON credentials file ([Credentials](https://console.cloud.google.com/apis/credentials)
   - Create credentials -> Service account.
-  - "Service account name" can be e.g. "tf-data-science".
+  - "Service account name" can be e.g. "tf-tor-obfs4-gridge".
   - "Role" can be Basic -> Editor.
   - Manage keys -> Add key -> Create new key -> JSON -> Save it in e.g.
     `~/secrets/stunning-vertex-342218-e123456abcde`.
@@ -63,7 +63,7 @@ Log-in (ssh) into the VM instance:
 ssh -i ~/secrets/gcp-tor-obfs4-bridge-ssh \
   -o "UserKnownHostsFile=/dev/null" \
   -o "StrictHostKeyChecking no" \
-  ubuntu@$(terraform output ip_nat_vm_data_science | xargs -n1 echo)
+  ubuntu@$(terraform output ip_nat_vm_tor_obfs4_bridge | xargs -n1 echo)
 ```
 
 If you'd like to access web UIs using a local browser, you can use forwarding, e.g.:
@@ -73,7 +73,7 @@ ssh -i ~/secrets/gcp-tor-obfs4-bridge-ssh \
   -o "UserKnownHostsFile=/dev/null" \
   -o "StrictHostKeyChecking no" \
   -L 8080:localhost:80 \
-  ubuntu@$(terraform output ip_nat_vm_data_science | xargs -n1 echo)
+  ubuntu@$(terraform output ip_nat_vm_tor_obfs4_bridge | xargs -n1 echo)
 ```
 
 After logging in, you can check:
@@ -85,7 +85,7 @@ up by terraform, so you may need to explicitly request a replacement:
 
 ```shell
 terraform apply -var-file="tor-obfs4-bridge.tfvars" \
-  -replace google_compute_instance.vm_data_science
+  -replace google_compute_instance.vm_tor_obfs4_bridge
 ```
 
 To remove the VM,

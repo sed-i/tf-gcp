@@ -18,27 +18,27 @@ variable "region" {
   type        = string
   description = "GCP region"
   # default     = "us-central1"
-  default     = "northamerica-northeast2"
+  default = "northamerica-northeast2"
 }
 
 variable "zone" {
   type        = string
   description = "GCP zone"
   # default     = "us-central1-a"
-  default     = "northamerica-northeast2-a"
+  default = "northamerica-northeast2-a"
 }
 
 variable "ssh_public_key_path" {
   type        = string
   description = "Path to file with public ssh key"
-  default     = "~/secrets/gcp-data-science-ssh.pub"
+  default     = "~/secrets/gcp-tor-obfs4-bridge-ssh.pub"
   sensitive   = true
 }
 
 variable "ssh_private_key_path" {
   type        = string
   description = "Path to file with private ssh key"
-  default     = "~/secrets/gcp-data-science-ssh"
+  default     = "~/secrets/gcp-tor-obfs4-bridge-ssh"
   sensitive   = true
 }
 

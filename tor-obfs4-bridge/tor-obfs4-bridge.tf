@@ -1,4 +1,4 @@
-data "cloudinit_config" "data_science" {
+data "cloudinit_config" "tor_obfs4_bridge" {
   # https://registry.terraform.io/providers/hashicorp/cloudinit/latest/docs/data-sources/cloudinit_config
   # https://github.com/hashicorp/terraform-provider-template/blob/79c2094838bfb2b6bba91dc5b02f5071dd497083/website/docs/d/cloudinit_config.html.markdown
   gzip          = false
@@ -6,7 +6,7 @@ data "cloudinit_config" "data_science" {
 
   part {
     content_type = "text/cloud-config"
-    filename = "tor_obfs4_bridge.conf"
+    filename     = "tor_obfs4_bridge.conf"
 
     content = yamlencode(
       {
@@ -56,8 +56,8 @@ data "cloudinit_config" "data_science" {
 }
 
 
-resource "google_compute_instance" "vm_data_science" {
-  name         = local.data_science_resource_name
+resource "google_compute_instance" "vm_tor_obfs4_bridge" {
+  name         = local.tor_obfs4_bridge_resource_name
   machine_type = "custom-${var.ncpus}-${var.gbmem * 1024}"
   tags         = ["tor-bridge-internal-traffic", "tor-bridge-ssh-traffic", "node-exporter-scrape"]
 
@@ -70,7 +70,7 @@ resource "google_compute_instance" "vm_data_science" {
   }
 
   metadata = {
-    user-data = "${data.cloudinit_config.data_science.rendered}"
+    user-data = "${data.cloudinit_config.tor_obfs4_bridge.rendered}"
   }
 
   network_interface {
