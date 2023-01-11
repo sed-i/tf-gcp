@@ -17,8 +17,7 @@ provider "google" {
 
 locals {
   #  tor_bridge_internal_url        = "http://${google_compute_instance.vm_tor_obfs4_bridge.name}.${var.zone}.c.${var.project}.internal"
-  file_provisioner_ssh_key       = file(var.ssh_private_key_path)
-  tor_obfs4_bridge_resource_name = "tor-obfs4-bridge-${var.ncpus}cpu-${var.gbmem}gb"
+  tor_obfs4_bridge_resource_name = "gcp-tor-obfs4-bridge-${var.ncpus}cpu-${var.gbmem}gb"
 }
 
 resource "google_compute_network" "tor_bridge_net" {
@@ -69,7 +68,7 @@ resource "google_compute_firewall" "tor_obs4_bridge_ports" {
 
   allow {
     protocol = "tcp"
-    ports    = [var.OR_PORT, var.PT_PORT]
+    ports    = var.allowed_ports
   }
 
   target_tags   = ["tor-bridge-ssh-traffic"]

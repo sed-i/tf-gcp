@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3.8"
 services:
   obfs4-bridge:
     image: thetorproject/obfs4-bridge:latest
@@ -19,6 +19,13 @@ services:
       - ${OR_PORT}:${OR_PORT}
       - ${PT_PORT}:${PT_PORT}
     restart: unless-stopped
+
+#  snowflake-proxy:
+#      # TODO: need to modify firewall for this to work?
+#      network_mode: host
+#      image: thetorproject/snowflake-proxy:latest
+#      container_name: snowflake-proxy
+#      restart: unless-stopped
 
 volumes:
   data:
