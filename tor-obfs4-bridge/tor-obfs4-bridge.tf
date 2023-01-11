@@ -57,7 +57,8 @@ data "cloudinit_config" "tor_obfs4_bridge" {
 
 
 resource "google_compute_instance" "vm_tor_obfs4_bridge" {
-  name         = local.tor_obfs4_bridge_resource_name
+  count        = var.num_instances
+  name         = "${local.tor_obfs4_bridge_resource_name}-${count.index}"
   machine_type = "custom-${var.ncpus}-${var.gbmem * 1024}"
   tags         = ["tor-bridge-internal-traffic", "tor-bridge-ssh-traffic", "node-exporter-scrape"]
 
@@ -65,12 +66,12 @@ resource "google_compute_instance" "vm_tor_obfs4_bridge" {
     initialize_params {
       image = "ubuntu-os-cloud/ubuntu-minimal-2204-lts"
       type  = var.disk_type
-      size  = "50"
+      size  = "10"
     }
   }
 
   metadata = {
-    user-data = "${data.cloudinit_config.tor_obfs4_bridge.rendered}"
+    user-data = data.cloudinit_config.tor_obfs4_bridge.rendered
   }
 
   network_interface {

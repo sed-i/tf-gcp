@@ -17,15 +17,15 @@ variable "credentials_file" {
 variable "region" {
   type        = string
   description = "GCP region"
-  # default     = "us-central1"
-  default = "northamerica-northeast2"
+   default     = "us-central1"
+#  default = "northamerica-northeast2"
 }
 
 variable "zone" {
   type        = string
   description = "GCP zone"
-  # default     = "us-central1-a"
-  default = "northamerica-northeast2-a"
+   default     = "us-central1-a"
+#  default = "northamerica-northeast2-a"
 }
 
 variable "ssh_public_key_path" {
@@ -48,7 +48,7 @@ variable "ssh_private_key_path" {
 
 variable "disk_type" {
   type        = string
-  description = "GCP disk type (ssd/magnetic)"
+  description = "GCP disk type (ssd/magnetic). See https://cloud.google.com/compute/docs/disks/#disk-types."
 
   validation {
     condition     = var.disk_type == "pd-ssd" || var.disk_type == "pd-standard"
@@ -73,6 +73,17 @@ variable "gbmem" {
   validation {
     condition     = can(regex("[0-9][0-9]*", var.gbmem))
     error_message = "The gbmem variable must be an integer."
+  }
+}
+
+variable "num_instances" {
+  type        = number
+  description = "Number of bridge instances."
+  default     = 1
+
+  validation {
+    condition     = can(regex("[0-9][0-9]*", var.num_instances))
+    error_message = "The num_instances variable must be an integer."
   }
 }
 
