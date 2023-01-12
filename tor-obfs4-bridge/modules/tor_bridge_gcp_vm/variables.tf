@@ -8,16 +8,6 @@ variable "credentials_file" {
   description = "Path to the JSON key file for editing GCP resources"
 }
 
-variable "region" {
-  type        = string
-  description = "GCP region (e.g. us-central1, northamerica-northeast2, ...)"
-}
-
-variable "zone" {
-  type        = string
-  description = "GCP zone (e.g. us-central1-a, northamerica-northeast2-a, ...)"
-}
-
 variable "disk_type" {
   type        = string
   description = "GCP disk type (ssd/magnetic). See https://cloud.google.com/compute/docs/disks/#disk-types."
@@ -51,15 +41,11 @@ variable "gbmem" {
   }
 }
 
-variable "num_instances" {
-  type        = number
-  description = "Number of bridge instances."
-  default     = 1
-
-  validation {
-    condition     = can(regex("[0-9][0-9]*", var.num_instances))
-    error_message = "The num_instances variable must be an integer."
-  }
+variable "instances" {
+  type = list(object({
+    zone          = string
+    num_instances = number
+  }))
 }
 
 variable "ssh_public_key_path" {

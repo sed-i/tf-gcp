@@ -1,7 +1,20 @@
+locals {
+  nodes = flatten([for node in var.instances :
+    [
+      for i in range(node.num_instances) :
+      {
+        idx  = i
+        zone = node.zone
+      }
+    ]
+  ])
+}
+
 
 resource "google_compute_instance" "vm_tor_obfs4_bridge" {
-  count        = var.num_instances
-  name         = "${local.tor_obfs4_bridge_resource_name}-${count.index}"
+  for_each = { for itm in local.nodes : "${itm.zone}-${itm.idx}" => itm.zone }
+  name     = "${local.tor_obfs4_bridge_resource_name}-${each.key}"
+  zone         = each.value
   machine_type = "custom-${var.ncpus}-${var.gbmem * 1024}"
   tags         = ["tor-bridge-internal-traffic", "tor-bridge-ssh-traffic", "node-exporter-scrape"]
 
@@ -15,7 +28,6 @@ resource "google_compute_instance" "vm_tor_obfs4_bridge" {
 
   metadata = {
     user-data = var.rendered_cloud_config
-    #    user-data = data.cloudinit_config.tor_obfs4_bridge.rendered
   }
 
   network_interface {
