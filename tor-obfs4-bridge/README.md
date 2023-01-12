@@ -2,11 +2,8 @@
 
 This terraform bundle lets you provision a GCP VM instance for a tor obfs4 bridge.
 
-Usage:
-
-```shell
-terraform apply -var-file="tor-obfs4-bridge.tfvars"
-```
+Usage: update the `instances` variable in [main.tf](main.tf) and run
+`terraform apply`.
 
 A `tor-obfs4-bridge-2cpu-8gb` VM will be ready to use in a few minutes.
 
@@ -42,19 +39,11 @@ sudo snap install --classic google-cloud-sdk
 terraform init
 ```
 
-Update `variables.tf` with your project id and credentials filename.
-
-Modify `tor-obfs4-bridge.tfvars` to your needs and then run terraform:
-
-```shell
-terraform apply -var-file="tor-obfs4-bridge.tfvars"
-```
-
-Or, alternatively, override variables via cli:
+Update [main.tf](main.tf) with your project id and credentials filename and
+then run:
 
 ```shell
-terraform apply -var-file="tor-obfs4-bridge.tfvars" \
-  -var="ncpus=4" -var="gbmem=16"
+terraform apply
 ```
 
 Log-in (ssh) into the VM instance:
@@ -63,16 +52,6 @@ Log-in (ssh) into the VM instance:
 ssh -i ~/secrets/gcp-tor-obfs4-bridge-ssh \
   -o "UserKnownHostsFile=/dev/null" \
   -o "StrictHostKeyChecking no" \
-  ubuntu@$(terraform output ip_nat_vm_tor_obfs4_bridge | xargs -n1 echo)
-```
-
-If you'd like to access web UIs using a local browser, you can use forwarding, e.g.:
-
-```shell
-ssh -i ~/secrets/gcp-tor-obfs4-bridge-ssh \
-  -o "UserKnownHostsFile=/dev/null" \
-  -o "StrictHostKeyChecking no" \
-  -L 8080:localhost:80 \
   ubuntu@$(terraform output ip_nat_vm_tor_obfs4_bridge | xargs -n1 echo)
 ```
 
@@ -91,20 +70,10 @@ terraform apply -var-file="tor-obfs4-bridge.tfvars" \
 To remove the VM,
 
 ```shell
-terraform destroy -var-file="tor-obfs4-bridge.tfvars"
+terraform destroy
 ```
 
 ## Under the hood
 - Firewall rules allow access to the onion ports from anywhere
-- ohmyzsh juju plugin is installed for your convenience :)
 - Tested on:
-  - Terraform v1.1.4 on linux_amd64, google-cloud-sdk 374.0.0
-
-## TODO
-- Clamped autoscaling
-- Multiregional (e.g. noram, europe, asia)
-- Enable IPv6 in docker
-
-## References
-- [COS Lite load test](https://github.com/canonical/cos-lite-bundle/tree/main/tests/load/gcp)
-- Multipass [data-science](https://github.com/canonical/multipass-workflows/blob/main/v1/data-science.yaml) workflow
+  - Terraform v1.3.7 on linux_amd64, google-cloud-sdk 413.0.0
