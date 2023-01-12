@@ -2,10 +2,23 @@
 
 This terraform bundle lets you provision a GCP VM instance for a tor obfs4 bridge.
 
-Usage: update the `instances` variable in [main.tf](main.tf) and run
-`terraform apply`.
+Usage: update the `instances` variable in [main.tf](main.tf):
 
-A `tor-obfs4-bridge-2cpu-8gb` VM will be ready to use in a few minutes.
+```hcl
+  instances = [
+    {
+      zone          = "us-central1-a",
+      num_instances = 1,
+    },
+    {
+      zone          = "us-west1-a",
+      num_instances = 1,
+    },
+  ]
+```
+
+and run `terraform apply`.
+
 
 ## Setup GCP
 1. [Create a new project](https://console.cloud.google.com/cloud-resource-manager)
